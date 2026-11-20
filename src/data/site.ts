@@ -28,10 +28,10 @@ export const studio = {
 	founded: 2009,
 	email: 'hello@minormass.studio',
 	phone: '+351 210 123 456',
-	address: ['Rua das Flores 28', '1200-195 Lisboa', 'Portugal'],
+	address: ['Quezon City', 'Taguig', 'Philippines'],
 	hours: 'Mon – Fri, 09:00 – 18:00',
 	description:
-		'Minor Mass is an architecture and interiors studio in Lisbon. We design calm, material-led homes and workplaces, from the first sketch to the final key.',
+		'Minor Mass is an architecture and interiors studio in the Philippines. We design calm, material-led homes and workplaces, from the first sketch to the final key.',
 	socials: [
 		{ label: 'Instagram', href: 'https://www.instagram.com/' },
 		{ label: 'LinkedIn', href: 'https://www.linkedin.com/' },
@@ -294,7 +294,7 @@ export const testimonials = [
 ];
 
 export const projectTypes = ['New home', 'Renovation', 'Interior', 'Workplace', 'Other'];
-export const budgets = ['Under €250k', '€250k – €750k', '€750k – €2M', 'Above €2M', 'Not sure yet'];
+export const budgets = ['Under P250k', 'P250k – P750k', 'P750k – P2M', 'Above P2M', 'Not sure yet'];
 
 /** Studio commitments shown in the dark band under the process. */
 export const commitments = [

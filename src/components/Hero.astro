@@ -1,80 +1,111 @@
 ---
-import { Image } from 'astro:assets';
-import Icon from './Icon.astro';
-import { images, studio } from '../data/site';
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+import { images, studio } from "../data/site";
 
 // Headline: a sans line and an italic serif line, split into words for the load animation.
-const sans = 'Quiet buildings for'.split(' ');
-const serif = 'lives well considered.'.split(' ');
+const sans = "Quiet buildings for".split(" ");
+const serif = "lives well considered.".split(" ");
 
 /*
  * Annotation hotspots, as fractions of the hero photo (2400 × 1600).
  * hero.ts maps them onto the cropped, object-fit: cover image and draws the connector lines.
  */
 const spots = [
-	{ id: 'a', x: 0.69, y: 0.455 },
-	{ id: 'b', x: 0.29, y: 0.635 },
+  { id: "a", x: 0.69, y: 0.455 },
+  { id: "b", x: 0.29, y: 0.635 },
 ];
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title" data-hero>
-		<div class="hero__media" data-hero-media>
-			<Image
-				src={images.hero}
-				alt="A timber and black-clad house glowing at dusk beneath a large eucalyptus, its glazed living room lit from within"
-				widths={[768, 1280, 1920, 2400]}
-				sizes="100vw"
-				loading="eager"
-				fetchpriority="high"
-				data-hero-img
-			/>
-		</div>
+  <div class="hero__media" data-hero-media>
+    <Image
+      src={images.hero}
+      alt="A timber and black-clad house glowing at dusk beneath a large eucalyptus, its glazed living room lit from within"
+      widths={[768, 1280, 1920, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      data-hero-img
+    />
+  </div>
 
-		<div class="hero__top">
-			<h1 class="hero__title" id="hero-title">
-				{sans.map((w, i) => (
-					<><span class="w"><span style={`--w:${i}`}>{w}</span></span>{' '}</>
-				))}
-				<br />
-				{serif.map((w, i) => (
-					<><span class="w it"><span style={`--w:${i + sans.length}`}>{w}</span></span>{' '}</>
-				))}
-			</h1>
-			<a class="btn btn--light" href="#contact" data-hero-fade style="--i:0" data-magnetic>
-				Start your project
-				<span class="btn__icon"><Icon name="arrow-right" /></span>
-			</a>
-		</div>
+  <div class="hero__top">
+    <h1 class="hero__title" id="hero-title">
+      {sans.map((w, i) => (
+        <>
+          <span class="w">
+            <span style={`--w:${i}`}>{w}</span>
+          </span>{" "}
+        </>
+      ))}
+      <br />
+      {serif.map((w, i) => (
+        <>
+          <span class="w it">
+            <span style={`--w:${i + sans.length}`}>{w}</span>
+          </span>{" "}
+        </>
+      ))}
+    </h1>
+    <a
+      class="btn btn--light"
+      href="#contact"
+      data-hero-fade
+      style="--i:0"
+      data-magnetic
+    >
+      Start your project
+      <span class="btn__icon">
+        <Icon name="arrow-right" />
+      </span>
+    </a>
+  </div>
 
-		<p class="hero__founded" data-hero-fade style="--i:1">
-			Founded in
-			<strong>Lisbon, {studio.founded}</strong>
-		</p>
+  <p class="hero__founded" data-hero-fade style="--i:1">
+    Founded in
+    <strong>Philippines, {studio.founded}</strong>
+  </p>
 
-		<div class="hero__annotations" aria-hidden="false">
-			<svg class="hero__lines" aria-hidden="true" data-hero-lines>
-				<line data-line="a"></line>
-				<line data-line="b"></line>
-			</svg>
-			{spots.map((s) => <span class="hotspot" data-spot={s.id} data-x={s.x} data-y={s.y} aria-hidden="true"></span>)}
+  <div class="hero__annotations" aria-hidden="false">
+    <svg class="hero__lines" aria-hidden="true" data-hero-lines>
+      S<line data-line="a"></line>
+      <line data-line="b"></line>
+    </svg>
+    {spots.map((s) => (
+      <span
+        class="hotspot"
+        data-spot={s.id}
+        data-x={s.x}
+        data-y={s.y}
+        aria-hidden="true"
+      ></span>
+    ))}
 
-			<article class="note note--a" data-note="a" data-anchor="left">
-				<h2>Built to last</h2>
-				<p>Charred larch, lime render and oak, chosen to weather well for fifty years.</p>
-			</article>
-			<article class="note note--b" data-note="b" data-anchor="top">
-				<h2>Quality assured</h2>
-				<p>A partner visits the site every week, from the foundations to handover.</p>
-			</article>
-		</div>
+    <article class="note note--a" data-note="a" data-anchor="left">
+      <h2>Built to last</h2>
+      <p>
+        Charred larch, lime render and oak, chosen to weather well for fifty
+        years.
+      </p>
+    </article>
+    <article class="note note--b" data-note="b" data-anchor="top">
+      <h2>Quality assured</h2>
+      <p>
+        A partner visits the site every week, from the foundations to handover.
+      </p>
+    </article>
+  </div>
 
-		<div class="hero__proof" data-hero-fade style="--i:2">
-			<div class="hero__proof-row">
-				<span class="avatars" aria-hidden="true">
-					<span class="avatar">IF</span><span class="avatar">ML</span><span class="avatar">RA</span>
-				</span>
-				<strong>140+</strong>
-			</div>
-			<span>Buildings completed since {studio.founded}</span>
-		</div>
+  <div class="hero__proof" data-hero-fade style="--i:2">
+    <div class="hero__proof-row">
+      <span class="avatars" aria-hidden="true">
+        <span class="avatar">IF</span>
+        <span class="avatar">ML</span>
+        <span class="avatar">RA</span>
+      </span>
+      <strong>140+</strong>
+    </div>
+    <span>Buildings completed since {studio.founded}</span>
+  </div>
 </section>
