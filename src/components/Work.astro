@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/site';
+
+const categories = ['All', ...new Set(projects.map((p) => p.category))];
+const [p1, p2, p3, p4, p5, p6] = projects;
+const sizes = {
+	small: '(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw',
+	big: '(max-width: 900px) 100vw, 50vw',
+};
+---
+
+<section class="section" id="work" aria-labelledby="work-title" style="padding-bottom:0">
+	<div class="frame">
+		<div class="pad">
+			<div class="head">
+				<h2 class="h2 lines" id="work-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">Our signature</span></span>
+					<span class="ln it"><span style="--l:1">in every structure</span></span>
+				</h2>
+				<p data-reveal style="--i:2">
+					A selection of recent houses, interiors and workplaces, each designed with care and built to last. Open
+					a project for more photographs and its full details.
+				</p>
+			</div>
+		</div>
+
+		<div class="rule" data-reveal="rule"><span class="rule__mk" style="--x:50%"></span></div>
+
+		<div class="bento work-grid">
+			<div class="w-cell w-a">
+				<a class="btn btn--orange btn--sm" href="#index" data-magnetic>
+					View all projects
+					<span class="btn__icon"><Icon name="arrow-right" /></span>
+				</a>
+				<ProjectCard project={p3} sizes={sizes.small} i={2} />
+			</div>
+			<div class="w-cell w-cell--start w-b"><ProjectCard project={p2} sizes={sizes.small} i={1} /></div>
+			<div class="w-cell w-c"><ProjectCard project={p1} sizes={sizes.big} big /></div>
+			<div class="w-cell w-d"><ProjectCard project={p4} sizes={sizes.big} big /></div>
+			<div class="w-cell w-cell--start w-e"><ProjectCard project={p5} sizes={sizes.small} i={1} /></div>
+			<div class="w-cell w-cell--end w-f"><ProjectCard project={p6} sizes={sizes.small} i={2} /></div>
+		</div>
+
+		<div class="rule" data-reveal="rule"></div>
+
+		<div class="index" id="index" data-index>
+			<div class="index-head pad">
+				<h3 class="index-head__title">
+					Project index<small><span data-index-count>{projects.length}</span> projects</small>
+				</h3>
+				<div class="filters" role="group" aria-label="Filter projects by type">
+					{
+						categories.map((c) => (
+							<button class="filter" type="button" data-filter={c} aria-pressed={c === 'All' ? 'true' : 'false'}>
+								{c}
+							</button>
+						))
+					}
+				</div>
+			</div>
+			<div class="rule"></div>
+			<ul class="index-list">
+				{
+					projects.map((p) => (
+						<li class="index-row" data-category={p.category}>
+							<a class="index-row__btn" href={`#p-${p.slug}`} data-open-project={p.slug} data-preview={p.slug}>
+								<span class="index-row__title">{p.title}</span>
+								<span class="index-row__place">{p.location}</span>
+								<span class="index-row__cat">{p.category}</span>
+								<span class="index-row__year">{p.year}</span>
+								<Icon name="arrow-right" class="index-row__arrow" />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+			<p class="index-empty" hidden data-index-empty>
+				No projects of this type yet. Choose another filter to see more work.
+			</p>
+		</div>
+	</div>
+
+	<div class="index-preview" aria-hidden="true" data-index-preview>
+		{projects.map((p) => <Image src={p.cover} alt="" widths={[400, 640]} sizes="300px" data-preview-img={p.slug} loading="lazy" />)}
+	</div>
+
+	<div class="cursor-badge" aria-hidden="true" data-cursor-badge>View</div>
+</section>
+
+<dialog class="project-dialog" aria-labelledby="project-dialog-title" data-project-dialog>
+	<div class="project-dialog__bar">
+		<div class="pad project-dialog__bar-inner" style="max-width:var(--frame);margin-inline:auto">
+			<div class="project-dialog__nav">
+				<button class="icon-btn" type="button" aria-label="Previous project" data-dialog-prev>
+					<Icon name="arrow-left" />
+				</button>
+				<button class="icon-btn" type="button" aria-label="Next project" data-dialog-next>
+					<Icon name="arrow-right" />
+				</button>
+				<span class="kicker" style="margin-left:8px" data-dialog-count aria-live="polite"></span>
+			</div>
+			<button class="project-dialog__close" type="button" data-dialog-close>
+				Close
+				<span class="icon-btn"><Icon name="close" /></span>
+			</button>
+		</div>
+	</div>
+
+	<h2 class="sr-only" id="project-dialog-title">Project details</h2>
+
+	{
+		projects.map((p) => (
+			<article class="project-detail" data-project={p.slug} hidden aria-label={p.title}>
+				<div class="pad" style="max-width:var(--frame);margin-inline:auto">
+					<div class="project-detail__head">
+						<h3 class="project-detail__title">
+							<span class="it">
+								{p.category}, {p.year}
+							</span>
+							{p.title}
+						</h3>
+						<dl class="project-detail__facts">
+							<dt>Location</dt>
+							<dd>{p.location}</dd>
+							<dt>Completed</dt>
+							<dd>{p.year}</dd>
+							<dt>Type</dt>
+							<dd>{p.category}</dd>
+							<dt>Floor area</dt>
+							<dd>{p.area}</dd>
+						</dl>
+					</div>
+					<div class="media project-detail__cover">
+						<Image src={p.cover} alt={p.coverAlt} widths={[800, 1400, 2000]} sizes="100vw" loading="lazy" />
+					</div>
+					<div class="project-detail__body">
+						<div>
+							<p class="project-detail__summary">{p.summary}</p>
+							<p style="margin-top:32px">
+								<a class="btn" href="#contact" data-dialog-contact>
+									Discuss a similar project
+									<span class="btn__icon">
+										<Icon name="arrow-right" />
+									</span>
+								</a>
+							</p>
+						</div>
+						<div class="media project-detail__second">
+							<Image src={p.detail} alt={p.detailAlt} widths={[600, 1000]} sizes="(max-width: 800px) 100vw, 40vw" loading="lazy" />
+						</div>
+					</div>
+				</div>
+			</article>
+		))
+	}
+</dialog>

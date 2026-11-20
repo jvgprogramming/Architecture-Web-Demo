@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { testimonials } from '../data/site';
+
+const initials = (name: string) =>
+	name
+		.split(/\s|&/)
+		.filter(Boolean)
+		.map((w) => w[0])
+		.slice(0, 2)
+		.join('');
+---
+
+<section id="testimonials" aria-labelledby="voices-title" data-voices>
+	<div class="frame">
+		<div class="rule" data-reveal="rule"><span class="rule__mk" style="--x:50%"></span></div>
+		<div class="bento voices">
+			<div class="voices__intro">
+				<h2 class="h2 lines" id="voices-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">Trust built</span></span>
+					<span class="ln it"><span style="--l:1">into every project</span></span>
+				</h2>
+				<p data-reveal style="--i:2">
+					Good buildings begin with good partnerships. Here is what clients say about working with us, in their own
+					words.
+				</p>
+				<div class="voices__controls" data-reveal style="--i:3">
+					<button class="icon-btn" type="button" aria-label="Previous testimonial" data-voices-prev>
+						<Icon name="arrow-left" />
+					</button>
+					<button class="icon-btn" type="button" aria-label="Next testimonial" data-voices-next>
+						<Icon name="arrow-right" />
+					</button>
+					<span class="voices__count" aria-live="polite"><span data-voices-current>1</span> of {testimonials.length}</span>
+				</div>
+			</div>
+
+			<ul class="voices__list">
+				{
+					testimonials.map((t, i) => (
+						<li style="display:contents">
+							<button
+								class:list={['voice', { 'is-active': i === 0 }]}
+								type="button"
+								aria-pressed={i === 0 ? 'true' : 'false'}
+								data-voice
+							>
+								<span class="voice__bar" aria-hidden="true" />
+								<span class="voice__rating">
+									<span class="stars" aria-hidden="true">
+										{Array.from({ length: 5 }, () => (
+											<Icon name="star" />
+										))}
+									</span>
+									<span>
+										{t.rating.toFixed(1)}
+										<span class="sr-only"> out of 5</span>
+										<span aria-hidden="true">/5</span>
+									</span>
+								</span>
+								<span class="voice__quote">“{t.quote}”</span>
+								<span class="voice__who">
+									<span class="avatar" aria-hidden="true">
+										{initials(t.name)}
+									</span>
+									<span>
+										<strong style="font-weight:500">{t.name}</strong>
+										<span>{t.role}</span>
+									</span>
+								</span>
+							</button>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+		<div class="rule" data-reveal="rule"><span class="rule__mk" style="--x:50%"></span></div>
+	</div>
+</section>

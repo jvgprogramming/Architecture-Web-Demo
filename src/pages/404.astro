@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Layout title="Page not found | Minor Mass">
+	<section class="frame">
+		<div class="not-found">
+			<p class="kicker">Error 404</p>
+			<h1 class="h2" style="font-size:var(--fs-h1)">
+				This page was<br /><span class="it">never built.</span>
+			</h1>
+			<p class="muted" style="max-width:44ch">
+				The address may be mistyped, or the page may have moved. Go back to the home page to see the studio and its
+				work.
+			</p>
+			<a class="btn" href="/">
+				Go to the home page
+				<span class="btn__icon"><Icon name="arrow-right" /></span>
+			</a>
+		</div>
+	</section>
+</Layout>

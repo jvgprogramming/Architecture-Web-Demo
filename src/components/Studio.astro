@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { images, stats } from '../data/site';
+
+const intro =
+	'From the first site visit to the final key, we turn a brief into a building through patient listening, precise detailing and enduring craft.';
+const words = intro.split(' ');
+---
+
+<section id="studio" aria-labelledby="studio-title">
+	<div class="frame">
+		<p class="intro__text" data-reveal="words">
+			{words.map((w, i) => <><span class="wd" style={`--wi:${i}`}>{w}</span>{' '}</>)}
+		</p>
+
+		<div class="rule" data-reveal="rule"><span class="rule__mk" style="--x:50%"></span></div>
+
+		<div class="bento intro-bento">
+			<div class="b-stat" data-reveal>
+				<div class="b-stat__row">
+					<span class="avatars" aria-hidden="true">
+						<span class="avatar">AD</span><span class="avatar">HM</span><span class="avatar">SC</span>
+					</span>
+					<span class="b-stat__value"><span data-count={stats[0].value}>{stats[0].value}</span>{stats[0].suffix}</span>
+				</div>
+				<p>{stats[0].label}</p>
+			</div>
+
+			<div class="b-img">
+				<div class="media" data-reveal="mask">
+					<Image src={images.cliffVilla} alt="White villa with timber soffits above a long pool" widths={[400, 700]} sizes="(max-width: 1000px) 50vw, 20vw" />
+				</div>
+			</div>
+
+			<div class="b-img b-tall">
+				<div class="media" data-reveal="mask" style="--i:1">
+					<Image
+						src={images.timberHouse}
+						alt="Timber house with a folded roof and a double-height glazed entrance"
+						widths={[500, 900, 1300]}
+						sizes="(max-width: 560px) 100vw, (max-width: 1000px) 50vw, 26vw"
+					/>
+				</div>
+			</div>
+
+			<div class="b-copy">
+				<h2 class="h2 lines" id="studio-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">We build spaces</span></span>
+					<span class="ln it"><span style="--l:1">that shape the future</span></span>
+				</h2>
+				<div class="b-copy__foot">
+					<p data-reveal style="--i:1">
+						Minor Mass is a studio of fourteen architects and makers in Lisbon, founded by Ana Duarte and Henrik
+						Moll. Every project is led by a partner, and we take on about ten projects a year so each gets our full
+						attention.
+					</p>
+					<a class="btn" href="#contact" data-reveal style="--i:2" data-magnetic>
+						Discuss your project
+						<span class="btn__icon"><Icon name="arrow-right" /></span>
+					</a>
+				</div>
+			</div>
+
+			<div class="b-img">
+				<div class="media" data-reveal="mask" style="--i:2">
+					<Image src={images.whiteCourtyard} alt="Lime-washed white house with a courtyard and pine trees" widths={[400, 700]} sizes="(max-width: 1000px) 50vw, 22vw" />
+				</div>
+			</div>
+
+			<div class="b-stat b-stat--low" data-reveal style="--i:1">
+				<span class="b-stat__value"><span data-count={stats[1].value}>{stats[1].value}</span>{stats[1].suffix}</span>
+				<p>{stats[1].label}</p>
+			</div>
+		</div>
+
+		<div class="rule" data-reveal="rule"></div>
+	</div>
+</section>

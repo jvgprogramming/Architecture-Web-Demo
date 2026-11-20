@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/site';
+
+interface Props {
+	project: Project;
+	sizes: string;
+	big?: boolean;
+	i?: number;
+}
+
+const { project: p, sizes, big = false, i = 0 } = Astro.props;
+---
+
+<a
+	class:list={['pcard', { 'pcard--big': big }]}
+	href={`#p-${p.slug}`}
+	data-open-project={p.slug}
+	data-cursor="View"
+>
+	<span class="media" data-reveal="mask" style={`--i:${i}`}>
+		<Image src={p.cover} alt={p.coverAlt} widths={big ? [700, 1100, 1600] : [400, 700, 900]} sizes={sizes} />
+	</span>
+	<span class="pcard__cap" data-reveal style={`--i:${i + 1}`}>
+		<span class="kicker">{p.category}, {p.year}</span>
+		<span class="pcard__title">{p.title}</span>
+	</span>
+</a>

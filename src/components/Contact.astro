@@ -1,0 +1,122 @@
+---
+import Icon from './Icon.astro';
+import { budgets, projectTypes, studio } from '../data/site';
+
+// Optional form backend (Formspree, Web3Forms, Basin, your own API…).
+// Without it the form validates, then opens a pre-filled email to the studio.
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? '';
+---
+
+<section class="bg-mist section" id="contact" aria-labelledby="contact-title">
+	<div class="frame">
+		<div class="rule" data-reveal="rule"><span class="rule__mk" style="--x:44.4%"></span></div>
+		<div class="bento contact-grid">
+			<div class="contact__intro">
+				<h2 class="h2 lines" id="contact-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">Tell us about</span></span>
+					<span class="ln it"><span style="--l:1">your site</span></span>
+				</h2>
+				<p data-reveal style="--i:2">
+					Share a few lines about the place, the people and the budget. A partner will reply within two working
+					days, and the first conversation is free.
+				</p>
+				<dl class="contact__details" data-reveal style="--i:3">
+					<div>
+						<dt>Email</dt>
+						<dd><a href={`mailto:${studio.email}`}>{studio.email}</a></dd>
+					</div>
+					<div>
+						<dt>Phone</dt>
+						<dd><a href={`tel:${studio.phone.replace(/\s/g, '')}`}>{studio.phone}</a></dd>
+					</div>
+					<div>
+						<dt>Studio</dt>
+						<dd>{studio.address.slice(0, 2).join(', ')}</dd>
+					</div>
+					<div>
+						<dt>Hours</dt>
+						<dd>{studio.hours}</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="contact__form-wrap" data-reveal style="--i:1">
+				<form
+					class="form"
+					novalidate
+					data-contact-form
+					data-endpoint={endpoint}
+					data-email={studio.email}
+					aria-describedby="form-status"
+				>
+					<div class="field field--half">
+						<label for="cf-name">Your name</label>
+						<input id="cf-name" name="name" type="text" autocomplete="name" required minlength="2" aria-describedby="cf-name-error" />
+						<span class="field__error" id="cf-name-error"></span>
+					</div>
+
+					<div class="field field--half">
+						<label for="cf-email">Email address</label>
+						<input id="cf-email" name="email" type="email" autocomplete="email" required aria-describedby="cf-email-error" />
+						<span class="field__error" id="cf-email-error"></span>
+					</div>
+
+					<div class="field field--half">
+						<label for="cf-type">Project type</label>
+						<select id="cf-type" name="projectType" required aria-describedby="cf-type-error">
+							<option value="" selected disabled>Choose one</option>
+							{projectTypes.map((t) => <option value={t}>{t}</option>)}
+						</select>
+						<span class="field__error" id="cf-type-error"></span>
+					</div>
+
+					<div class="field field--half">
+						<label for="cf-budget">Construction budget <span class="muted">(optional)</span></label>
+						<select id="cf-budget" name="budget">
+							<option value="" selected>Choose a range</option>
+							{budgets.map((b) => <option value={b}>{b}</option>)}
+						</select>
+						<span class="field__error"></span>
+					</div>
+
+					<div class="field">
+						<label for="cf-message">About the project</label>
+						<textarea
+							id="cf-message"
+							name="message"
+							rows="4"
+							required
+							minlength="20"
+							maxlength="2000"
+							placeholder="Location, size, timeline, anything that matters to you"
+							aria-describedby="cf-message-error"></textarea>
+						<span class="field__error" id="cf-message-error"></span>
+					</div>
+
+					<div class="field field--hp" aria-hidden="true">
+						<label for="cf-company">Leave this field empty</label>
+						<input id="cf-company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+					</div>
+
+					<div class="field field--check">
+						<input id="cf-consent" name="consent" type="checkbox" required aria-describedby="cf-consent-error" />
+						<label for="cf-consent">I agree that Minor Mass may store these details to reply to my enquiry.</label>
+						<span class="field__error" id="cf-consent-error"></span>
+					</div>
+
+					<div class="form__footer">
+						<p class="form__status" id="form-status" role="status" aria-live="polite" data-form-status></p>
+						<button class="btn" type="submit" data-submit data-magnetic>
+							Send enquiry
+							<span class="btn__icon">
+								<span class="btn__arrow"><Icon name="arrow-right" /></span>
+								<span class="spinner" aria-hidden="true"></span>
+							</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="rule" data-reveal="rule"></div>
+	</div>
+</section>

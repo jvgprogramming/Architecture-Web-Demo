@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { commitments, process } from '../data/site';
+---
+
+<section class="process" id="process" aria-labelledby="process-title">
+	<div class="frame">
+		<div class="pad process__head" style="padding-bottom:clamp(40px,5vw,64px)">
+			<div class="head head--center" style="padding-bottom:0">
+				<h2 class="h2 lines" id="process-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">A simple plan and a calm build</span></span>
+					<span class="ln it"><span style="--l:1">Relax and enjoy the process</span></span>
+				</h2>
+			</div>
+		</div>
+
+		<div class="steps" data-steps>
+			{
+				process.map((step, i) => (
+					<div
+						class:list={['stp', { 'is-active': i === 1 }]}
+						role="button"
+						tabindex="0"
+						aria-expanded={i === 1 ? 'true' : 'false'}
+						aria-label={`Stage ${i + 1}: ${step.title}`}
+						data-step
+						data-reveal
+						style={`--i:${i}`}
+					>
+						<div class="media">
+							<Image src={step.image} alt="" widths={[500, 900, 1300]} sizes="(max-width: 760px) 100vw, 60vw" />
+						</div>
+						<span class="stp__vlabel" aria-hidden="true">
+							{step.title}
+						</span>
+						<div class="stp__body">
+							<div>
+								<h3 class="stp__title">
+									<span class="it">Stage {i + 1}</span>
+									{step.title}, {step.phase.toLowerCase()}
+								</h3>
+								<p class="stp__text">{step.text}</p>
+							</div>
+							<p class="stp__meta">
+								<span>{step.phase}</span>
+								<span>{step.duration}</span>
+							</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="bg-black">
+		<div class="frame frame--dark">
+			<p class="process__lede" data-reveal>
+				Each of the four stages has a fixed fee and a clear deliverable. You always know what happens next, what it
+				costs and who is responsible.
+			</p>
+			<div class="rule" data-reveal="rule">
+				<span class="rule__mk" style="--x:25%"></span><span class="rule__mk" style="--x:50%"></span><span
+					class="rule__mk"
+					style="--x:75%"></span>
+			</div>
+			<ul class="bento values">
+				{
+					commitments.map((c, i) => (
+						<li class="value" data-reveal style={`--i:${i}`}>
+							<Icon name={c.icon} class="value__icon" />
+							<h3>{c.title}</h3>
+							<p>{c.text}</p>
+						</li>
+					))
+				}
+			</ul>
+			<div class="rule" data-reveal="rule"></div>
+		</div>
+	</div>
+</section>

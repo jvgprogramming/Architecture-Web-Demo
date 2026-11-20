@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import { services } from '../data/site';
+
+/*
+ * Staggered 4 × 2 checkerboard from the reference: odd columns hold the card in the
+ * lower row, even columns in the upper row. Empty slots keep the hairline grid intact.
+ */
+const cells = services.flatMap((s, i) => {
+	const low = i % 2 === 0;
+	return [{ kind: 'slot' as const, col: i + 1, row: low ? 1 : 2 }, { kind: 'svc' as const, s, i, col: i + 1, row: low ? 2 : 1 }];
+});
+---
+
+<section class="bg-mist" id="services" aria-labelledby="services-title">
+	<div class="frame">
+		<div class="pad section" style="padding-bottom:0">
+			<div class="head">
+				<h2 class="h2 lines" id="services-title" data-reveal="lines">
+					<span class="ln"><span style="--l:0">Explore</span></span>
+					<span class="ln it"><span style="--l:1">our services</span></span>
+				</h2>
+				<p data-reveal style="--i:2">
+					From the first feasibility study to the final handover, every service is set up to keep your project
+					clear, on budget and built to last.
+				</p>
+			</div>
+		</div>
+
+		<div class="rule" data-reveal="rule">
+			<span class="rule__mk" style="--x:25%"></span><span class="rule__mk" style="--x:50%"></span><span
+				class="rule__mk"
+				style="--x:75%"></span>
+		</div>
+
+		<div class="bento services-grid">
+			{
+				cells.map((c) =>
+					c.kind === 'slot' ? (
+						<div class="svc-slot" style={`--c:${c.col};--r:${c.row}`} aria-hidden="true" />
+					) : (
+						<article class="svc" style={`--c:${c.col};--r:${c.row};--i:${c.i}`} data-reveal>
+							<div class="media" data-reveal="mask" style={`--i:${c.i}`}>
+								<Image src={c.s.image} alt={c.s.alt} widths={[400, 700]} sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw" />
+							</div>
+							<span class="svc__num kicker">S/{String(c.i + 1).padStart(3, '0')}</span>
+							<h3 class="svc__title">{c.s.title}</h3>
+							<div class="svc__more">
+								<div>
+									<p>{c.s.summary}</p>
+									<ul class="svc__tags" aria-label={`${c.s.title} deliverables`}>
+										{c.s.deliverables.map((d) => (
+											<li>{d}</li>
+										))}
+									</ul>
+								</div>
+							</div>
+						</article>
+					),
+				)
+			}
+		</div>
+
+		<div class="rule" data-reveal="rule"></div>
+	</div>
+</section>
